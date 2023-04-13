@@ -1,0 +1,45 @@
+{
+    "workbench.colorTheme": "Default Dark+",
+    "workbench.startupEditor": "none",
+    "security.workspace.trust.enabled": false,
+    "editor.minimap.enabled": false,
+    "terraform.experimentalFeatures.validateOnSave": true,
+    "terraform.experimentalFeatures.prefillRequiredFields": true,
+    "[terraform]": {
+        "editor.defaultFormatter": "hashicorp.terraform",
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file"
+    },
+    "[terraform-vars]": {
+        "editor.defaultFormatter": "hashicorp.terraform",
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file"
+    },
+    "files.exclude": {
+        "**/.bash*": true,
+        "**/.cache": true,
+        "**/.config": true,
+        "**/.docker": true,
+        "**/.gnupg": true,
+        "**/.git-credentials": true,
+        "**/.gitconfig": true,
+        "**/.local": true,
+        "**/.profile": true,
+        "**/.ssh": true,
+        "**/.terraform.d": true,
+        "**/.viminfo": true,
+        "**/.vimrc": true,
+        "**/.vscode": true,
+        "**/terraform-github": true,
+        "**/terraform-api": true,
+        "**/scripts": true,
+        "**/snap": true
+    },
+    "workbench.iconTheme": "material-icon-theme",
+    "material-icon-theme.activeIconPack": "react",
+    "material-icon-theme.files.associations": { },
+    "material-icon-theme.folders.theme": "classic",
+    "material-icon-theme.hidesExplorerArrows": true,
+    "git.confirmSync": false,
+    "git.autofetch": true
+}

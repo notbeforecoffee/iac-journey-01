@@ -1,0 +1,30 @@
+# Terraform state files #
+#########################
+*.tfstate
+*.tfstate.backup
+
+# Terraform provider files #
+############################
+.terraform
+
+# Terraform lock file #
+#######################
+*.terraform.lock.hcl
+
+# Anything with SSH #
+#####################
+.ssh
+
+# MacOS generated files #
+#########################
+.DS_Store
+.DS_Store?
+
+# Instruqt Track #
+##################
+instruqt_track
+
+# Notes #
+#########
+notes.txt
+ 

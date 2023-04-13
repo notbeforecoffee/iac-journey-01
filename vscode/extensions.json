@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "hashicorp.terraform",
+        "github.vscode-pull-request-github",
+        "pkief.material-icon-theme"
+    ],
+    "unwantedRecommendations": [ ]
+}

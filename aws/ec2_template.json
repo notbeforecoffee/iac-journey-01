@@ -1,0 +1,63 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "EC2Instance": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "InstanceType": "t2.nano",
+                "ImageId": "${IMAGE_ID}",
+                "KeyName": "${PREFIX}",
+                "NetworkInterfaces": [ {
+                        "AssociatePublicIpAddress": "true",
+                        "DeviceIndex": "0",
+                        "GroupSet": [ "$AWS_DEFAULT_SG" ],
+                        "SubnetId": "${SUBNET_ID}"
+                    } ],
+                "Tags": [ {
+                        "Key": "Name",
+                        "Value": "ec2-cf-tpl-${RANDY}"
+                    } ],
+                "BlockDeviceMappings": [ {
+                        "DeviceName": "/dev/sdm",
+                        "Ebs": {
+                            "VolumeType": "io1",
+                            "Iops": "200",
+                            "DeleteOnTermination": "false",
+                            "VolumeSize": "20"
+                        }
+                    },
+                    {
+                        "DeviceName": "/dev/sdk",
+                        "NoDevice": { }
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "InstanceId": {
+            "Description": "InstanceId of the newly created EC2 instance",
+            "Value": {
+                "Ref": "EC2Instance"
+            }
+        },
+        "AZ": {
+            "Description": "Availability Zone of the newly created EC2 instance",
+            "Value": {
+                "Fn::GetAtt": [ "EC2Instance", "AvailabilityZone" ]
+            }
+        },
+        "PublicDNS": {
+            "Description": "Public DNSName of the newly created EC2 instance",
+            "Value": {
+                "Fn::GetAtt": [ "EC2Instance", "PublicDnsName" ]
+            }
+        },
+        "PublicIP": {
+            "Description": "Public IP address of the newly created EC2 instance",
+            "Value": {
+                "Fn::GetAtt": [ "EC2Instance", "PublicIp" ]
+            }
+        }
+    }
+}
