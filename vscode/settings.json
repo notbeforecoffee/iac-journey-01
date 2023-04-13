@@ -16,6 +16,7 @@
         "editor.formatOnSaveMode": "file"
     },
     "files.exclude": {
+        "**/.aws*": true,
         "**/.bash*": true,
         "**/.cache": true,
         "**/.config": true,
@@ -24,16 +25,15 @@
         "**/.git-credentials": true,
         "**/.gitconfig": true,
         "**/.local": true,
+        "**/.nanorc": true,
         "**/.profile": true,
         "**/.ssh": true,
         "**/.terraform.d": true,
+        "**/.vim": true,
         "**/.viminfo": true,
         "**/.vimrc": true,
         "**/.vscode": true,
-        "**/terraform-github": true,
-        "**/terraform-api": true,
-        "**/scripts": true,
-        "**/snap": true
+        "**/.wget-hsts": true
     },
     "workbench.iconTheme": "material-icon-theme",
     "material-icon-theme.activeIconPack": "react",
