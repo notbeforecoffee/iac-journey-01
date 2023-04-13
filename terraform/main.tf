@@ -1,15 +1,3 @@
-# Create a new instance of the latest Ubuntu on an EC2 instance,
-# t2.micro node. If you are not sure of what you are trying to find,
-# try this using the AWS command line:
-#
-#  aws ec2 describe-images --owners 099720109477 \
-#    --filters "Name=name,Values=*hvm-ssd*bionic*18.04-amd64*" \
-#    --query 'sort_by(Images, &CreationDate)[].Name'
-#
-# aws ec2 describe-images --owners 099720109477 \
-#   --filters "Name=name,Values=*hvm-ssd*focal*20.04-amd64*" \
-#   --query 'sort_by(Images, &CreationDate)[].Name'
-
 terraform {
   required_providers {
     aws = {
@@ -19,33 +7,15 @@ terraform {
   }
   backend "s3" {
     # Replace this with your bucket name!
-    bucket         = "terraform-state-yorku"
-    key            = "global/s3/terraform.tfstate"
-    region         = "us-east-2"
-  }  
+    bucket = "terraform-state-yorku"
+    key    = "global/s3/terraform.tfstate"
+    region = "us-east-2"
+  }
 }
 
 provider "aws" {
   region = "us-east-2"
 }
-
-variable "instance_names" {
-  type    = list(string)
-  default = ["nginx1", "nginx2", "nginx3"]
-}
-
-variable "private_subnet" {
-  type    = list(string)
-  default = ["10.168.1.0/24", "10.168.2.0/24", "10.168.3.0/24"]
-
-}
-
-variable "public_subnet" {
-  type    = list(string)
-  default = ["10.168.101.0/24", "10.168.102.0/24", "10.168.103.0/24"]
-}
-
-
 
 resource "aws_vpc" "interrupt_vpc" {
   cidr_block           = "10.168.0.0/16"
