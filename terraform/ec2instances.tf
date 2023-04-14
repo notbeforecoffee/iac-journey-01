@@ -26,8 +26,12 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+data "http" "happy_animals" {
+  url = "https://raw.githubusercontent.com/gcastill0/iac-journey-01/main/bash/deploy-app.sh"
+}
+
 data "template_file" "happy_animals" {
-  template = file("${path.module}/../bash/deploy-app.sh")
+  template = data.http.happy_animals.response_body
 }
 
 resource "aws_instance" "app" {
