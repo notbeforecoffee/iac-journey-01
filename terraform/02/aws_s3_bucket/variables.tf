@@ -7,14 +7,6 @@ variable "prefix" {
 }
 
 /**** **** **** **** **** **** **** **** **** **** **** ****
-Defaulting to US-EAST-2
-**** **** **** **** **** **** **** **** **** **** **** ****/
-
-variable "region" {
-  default = "us-east-2"
-}
-
-/**** **** **** **** **** **** **** **** **** **** **** ****
 Default tags used to determine the identity and meta-data 
 for the deployment. 
 **** **** **** **** **** **** **** **** **** **** **** ****/

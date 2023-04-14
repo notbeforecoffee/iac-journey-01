@@ -1,9 +1,3 @@
-locals {
-  aws_region     = var.region
-  s3_bucket_name = var.prefix
-  tags           = merge({ "Name" = "${var.prefix}" }, var.tags)
-}
-
 /**** **** **** **** **** **** **** **** **** **** **** ****
 2023 - Obtain an up-to-date Terraform Provider for AWS.
 **** **** **** **** **** **** **** **** **** **** **** ****/
@@ -21,7 +15,8 @@ terraform {
 Make sure all objects are private. This provides a S3 bucket.
 **** **** **** **** **** **** **** **** **** **** **** ****/
 
-resource "aws_s3_bucket" "backend" {
-  bucket = local.s3_bucket_name
-  tags   = local.tags
+resource "aws_s3_bucket" "tf_state" {
+  bucket        = var.prefix
+  tags          = merge({ "Name" = "${var.prefix}" }, var.tags)
+  force_destroy = true
 }

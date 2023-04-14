@@ -44,12 +44,15 @@ data "template_file" "happy_animals" {
 # from the AWS intrumentation.
 
 resource "aws_instance" "app" {
-  ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t2.micro"
+
+  for_each = toset(["one", "two", "three"])
+
   key_name               = aws_key_pair.main.key_name
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = "t2.nano"
   vpc_security_group_ids = [aws_security_group.interrupt_app.id]
   user_data              = data.template_file.happy_animals.rendered
-  tags                   = merge({ "Name" = "${var.prefix}" }, var.tags)
+  tags                   = merge({ "Name" = "${var.prefix}-${each.key}" }, var.tags)
 
   lifecycle {
     create_before_destroy = true
