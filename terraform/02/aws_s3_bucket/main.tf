@@ -21,7 +21,7 @@ terraform {
 Make sure all objects are private. This provides a S3 bucket.
 **** **** **** **** **** **** **** **** **** **** **** ****/
 
-resource "aws_s3_bucket" "mirror" {
+resource "aws_s3_bucket" "backend" {
   bucket = local.s3_bucket_name
   tags   = local.tags
 }
