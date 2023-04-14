@@ -1,6 +1,5 @@
 # Create a new instance of the latest Ubuntu on an EC2 instance,
-# t2.micro node. If you are not sure of what you are trying to find,
-# try this using the AWS command line:
+# t2.micro node. We can find more options using the AWS command line:
 #
 #  aws ec2 describe-images --owners 099720109477 \
 #    --filters "Name=name,Values=*hvm-ssd*bionic*18.04-amd64*" \
@@ -26,13 +25,23 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+# To build our simple Web application, we need to obtain
+# the bootstrap script for Nginx and the Web app. 
+
 data "http" "happy_animals" {
   url = "https://raw.githubusercontent.com/gcastill0/iac-journey-01/main/bash/deploy-app.sh"
 }
 
+# We are opting to use an URL for portability so that 
+# changes to the bootstrap script do not affect the 
+# final deployment.
+
 data "template_file" "happy_animals" {
   template = data.http.happy_animals.response_body
 }
+
+# This EC2 instace inherits all of the default values
+# from the AWS intrumentation.
 
 resource "aws_instance" "app" {
   ami                    = data.aws_ami.ubuntu.id
@@ -40,14 +49,10 @@ resource "aws_instance" "app" {
   key_name               = aws_key_pair.main.key_name
   vpc_security_group_ids = [aws_security_group.interrupt_app.id]
   user_data              = data.template_file.happy_animals.rendered
-  tags                   = merge({ "Name" = "tf-iac-demo" }, var.tags)
+  tags                   = merge({ "Name" = "${var.prefix}" }, var.tags)
 
   lifecycle {
     create_before_destroy = true
   }
 
-}
-
-output "public_url" {
-  value = "http://${aws_instance.app.public_ip}"
 }
