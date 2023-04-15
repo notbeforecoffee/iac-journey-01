@@ -1,3 +1,3 @@
-# output "public_url" {
-#   value = "http://${aws_instance.app.public_ip}"
-# }
+output "public_urls" {
+  value = [for instance in aws_instance.app : "http://${instance.public_ip}"]
+}
