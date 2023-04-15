@@ -1,31 +1,38 @@
-# Terraform state files #
-#########################
+############################
+# Terraform state files    
+############################
 *.tfstate
 *.tfstate.backup
 
-# Terraform provider files #
+# Terraform provider files 
 ############################
 .terraform
 
-# Terraform lock file #
-#######################
+############################
+# Terraform lock file 
+############################
 *.terraform.lock.hcl
 
-# Anything with SSH #
-#####################
+############################
+# Anything with SSH 
+############################
 .ssh
 
-# MacOS generated files #
-#########################
+############################
+# MacOS generated files 
+############################
 .DS_Store
 .DS_Store?
 
-# Instruqt Track #
-##################
+############################
+# Instruqt Track 
+############################
 hashicorp
 iac-journey
 
-# Notes #
-#########
+############################
+# Notes that may contain 
+# private keys and such...
+############################
 notes.txt
  

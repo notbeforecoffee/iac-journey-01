@@ -1,122 +1,62 @@
-/**** **** **** **** **** **** **** **** **** **** **** ****
-2023 - Obtain an up-to-date Terraform Provider for AWS.
-**** **** **** **** **** **** **** **** **** **** **** ****/
+# Create a new instance of the latest Ubuntu on an EC2 instance,
+# t2.micro node. We can find more options using the AWS command line:
+#
+#  aws ec2 describe-images --owners 099720109477 \
+#    --filters "Name=name,Values=*hvm-ssd*bionic*18.04-amd64*" \
+#    --query 'sort_by(Images, &CreationDate)[].Name'
+#
+# aws ec2 describe-images --owners 099720109477 \
+#   --filters "Name=name,Values=*hvm-ssd*focal*20.04-amd64*" \
+#   --query 'sort_by(Images, &CreationDate)[].Name'
 
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
-    }
-  }
-}
+data "aws_ami" "ubuntu" {
+  most_recent = true
 
-/**** **** **** **** **** **** **** **** **** **** **** ****
-Should solicit the default AWS region from the user. For the
-purposes of a demonstration, we are defaulting to us-east-2.
-**** **** **** **** **** **** **** **** **** **** **** ****/
-
-provider "aws" {
-  region = var.region
-}
-
-/**** **** **** **** **** **** **** **** **** **** **** ****
-Inherit access the default AWS VPC. We do not plan to create
-a dedicated VPC in this exercise.
-**** **** **** **** **** **** **** **** **** **** **** ****/
-
-resource "aws_default_vpc" "default" {
-  tags = {
-    Name = "Default VPC"
-  }
-}
-
-/**** **** **** **** **** **** **** **** **** **** **** ****
-Create a separate EC2 Security Group to grant ingress and 
-egress network traffic to the EC2 instance via the default
-Subnet, Internet Gateway and Routing.
-**** **** **** **** **** **** **** **** **** **** **** ****/
-
-resource "aws_security_group" "interrupt_app" {
-  name        = "interrupt_app"
-  description = "Interrupt inbound traffic"
-  vpc_id      = aws_default_vpc.default.id
-  tags        = merge({ "Name" = "Interrupt App NSG" }, var.tags)
-}
-
-/**** **** **** **** **** **** **** **** **** **** **** ****
-Explicitly allow all egress traffic for the scurity group. 
-The CIDR should be changed to reflect the localized working
-environment in the demo platform.
-**** **** **** **** **** **** **** **** **** **** **** ****/
-
-resource "aws_security_group_rule" "egress_allow_all" {
-  description       = "Allow all outbound traffic."
-  type              = "egress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.interrupt_app.id
-}
-
-/**** **** **** **** **** **** **** **** **** **** **** ****
-Explicitly accept SSH traffic.
-**** **** **** **** **** **** **** **** **** **** **** ****/
-
-resource "aws_security_group_rule" "allow_ssh" {
-  description       = "SSH Connection"
-  type              = "ingress"
-  from_port         = 22
-  to_port           = 22
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.interrupt_app.id
-}
-
-/**** **** **** **** **** **** **** **** **** **** **** ****
-Explicitly accept HTTP traffic.
-**** **** **** **** **** **** **** **** **** **** **** ****/
-
-resource "aws_security_group_rule" "allow_http" {
-  description       = "HTTP Connection"
-  type              = "ingress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.interrupt_app.id
-}
-
-/**** **** **** **** **** **** **** **** **** **** **** ****
-Define a private key pair to access the EC2 instance. Do not
-expose the key outside fo the demo platform environment.
-**** **** **** **** **** **** **** **** **** **** **** ****/
-
-resource "tls_private_key" "main" {
-  algorithm = "RSA"
-}
-
-locals {
-  private_key_filename = "${var.prefix}-ssh-key"
-}
-
-resource "aws_key_pair" "main" {
-  key_name   = local.private_key_filename
-  public_key = tls_private_key.main.public_key_openssh
-}
-
-/**** **** **** **** **** **** **** **** **** **** **** ****
-Saving the key locally as an optional use case. It is not 
-necessary for the demo sequence and can be omitted.
-**** **** **** **** **** **** **** **** **** **** **** ****/
-
-resource "null_resource" "main" {
-  provisioner "local-exec" {
-    command = "echo \"${tls_private_key.main.private_key_pem}\" > ${var.prefix}-ssh-key.pem"
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
   }
 
-  provisioner "local-exec" {
-    command = "chmod 600 ${var.prefix}-ssh-key.pem"
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
   }
+
+  owners = ["099720109477"] # Canonical
+}
+
+# To build our simple Web application, we need to obtain
+# the bootstrap script for Nginx and the Web app. 
+
+data "http" "happy_animals" {
+  url = "https://raw.githubusercontent.com/gcastill0/iac-journey-01/main/bash/deploy-app.sh"
+}
+
+# We are opting to use an URL for portability so that 
+# changes to the bootstrap script do not affect the 
+# final deployment.
+
+data "template_file" "happy_animals" {
+  template = data.http.happy_animals.response_body
+}
+
+# This EC2 instace inherits all of the default values
+# from the AWS intrumentation. We are passing a list
+# of names to create an instance as part of a group.
+
+resource "aws_instance" "app" {
+
+  for_each = toset(var.instance_names)
+
+  key_name               = var.key_name
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [var.vpc_security_group_id]
+  user_data              = data.template_file.happy_animals.rendered
+  tags                   = merge({ "Name" = "${var.prefix}-${each.key}" }, var.tags)
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
 }
