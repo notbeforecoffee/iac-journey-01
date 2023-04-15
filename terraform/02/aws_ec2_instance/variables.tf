@@ -3,7 +3,11 @@ Prefix is here to emulate a required naming convention.
 **** **** **** **** **** **** **** **** **** **** **** ****/
 
 variable "prefix" {
-  default = "tf-iac-demo"
+  default = "tf-module-demo"
+}
+
+variable "instance_names" {
+  default = ["une", "deux", "trois"]
 }
 
 /**** **** **** **** **** **** **** **** **** **** **** ****

@@ -41,11 +41,12 @@ data "template_file" "happy_animals" {
 }
 
 # This EC2 instace inherits all of the default values
-# from the AWS intrumentation.
+# from the AWS intrumentation. We are passing a list
+# of names to create an instance as part of a group.
 
 resource "aws_instance" "app" {
 
-  for_each = toset(["one", "two", "three"])
+  for_each = toset(var.instance_names)
 
   key_name               = aws_key_pair.main.key_name
   ami                    = data.aws_ami.ubuntu.id
