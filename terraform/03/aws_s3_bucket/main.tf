@@ -12,7 +12,7 @@ terraform {
 }
 
 /**** **** **** **** **** **** **** **** **** **** **** ****
-Make sure all objects are private. This provides a S3 bucket.
+Make sure all objects are private. This provides an S3 bucket.
 **** **** **** **** **** **** **** **** **** **** **** ****/
 
 resource "aws_s3_bucket" "tf_state" {
