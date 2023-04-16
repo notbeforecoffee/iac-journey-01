@@ -11,7 +11,7 @@ var jsondata = {
             "class": "cell-span-6-5",
             "splash_delay": 1,
             "innerHTML": {
-                "template": "/html/templates/p01_t01.html",
+                "template": "../html/templates/p01_t01.html",
                 "template_class": "cell-content-normal"
             }
         }
@@ -27,7 +27,7 @@ var jsondata = {
             },
             "boxtype": "cell-decorated",
             "innerHTML": {
-                "template": "/html/templates/p04_t01.html",
+                "template": "../html/templates/p04_t01.html",
                 "template_class": "cell-content-small"
             }
         },
@@ -65,7 +65,7 @@ var jsondata = {
             },
             "boxtype": "cell-decorated",
             "innerHTML": {
-                "template": "/html/templates/p04_t03.html",
+                "template": "../html/templates/p04_t03.html",
                 "template_class": "cell-content-small"
             }
         },
@@ -79,7 +79,7 @@ var jsondata = {
             },
             "boxtype": "cell-decorated",
             "innerHTML": {
-                "template": "/html/templates/p04_t02.html",
+                "template": "../html/templates/p04_t02.html",
                 "template_class": "cell-content-small"
             }
         },
@@ -93,7 +93,7 @@ var jsondata = {
             },
             "boxtype": "cell-decorated",
             "innerHTML": {
-                "template": "/html/templates/p04_t04.html",
+                "template": "../html/templates/p04_t04.html",
                 "template_class": "cell-content-small"
             }
         }
@@ -104,7 +104,7 @@ var jsondata = {
             "class": "cell-span-5-5",
             "splash_delay": 1,
             "innerHTML": {
-                "template": "/html/templates/p02_t01.html",
+                "template": "../html/templates/p02_t01.html",
                 "template_class": "cell-content-normal"
             }
         },
@@ -121,7 +121,7 @@ var jsondata = {
             "class": "cell-span-5-5",
             "splash_delay": 1,
             "innerHTML": {
-                "template": "/html/templates/p02_t02.html",
+                "template": "../html/templates/p02_t02.html",
                 "template_class": "cell-content-normal"
             }
         },
@@ -138,7 +138,7 @@ var jsondata = {
             "class": "cell-span-5-5",
             "splash_delay": 1,
             "innerHTML": {
-                "template": "/html/templates/p02_t03.html",
+                "template": "../html/templates/p02_t03.html",
                 "template_class": "cell-content-normal"
             }
         },
@@ -155,7 +155,7 @@ var jsondata = {
             "class": "cell-span-12-6",
             "splash_delay": 1,
             "innerHTML": {
-                "template": "/html/templates/p98_t01.html",
+                "template": "../html/templates/p98_t01.html",
                 "template_class": "cell-content-normal"
             }
         }
@@ -238,7 +238,7 @@ var jsondata = {
             "class": "cell-span-5-5",
             "splash_delay": 1,
             "innerHTML": {
-                "template": "/html/templates/p06_t01.html",
+                "template": "../html/templates/p06_t01.html",
                 "template_class": "cell-content-normal"
             }
         },
@@ -319,7 +319,7 @@ var jsondata = {
             "class": "cell-span-12-6",
             "splash_delay": 1,
             "innerHTML": {
-                "template": "/html/templates/p99_t01.html",
+                "template": "../html/templates/p99_t01.html",
                 "template_class": "cell-content-normal"
             }
         }

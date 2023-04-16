@@ -152,7 +152,7 @@ window.onload = function () {
 
     svgDiv = document.createElement("div");
     svgDiv.id = "hashicorp-logo";
-    fetchSVG("/img/hashicorp.svg", svgDiv);
+    fetchSVG("img/hashicorp.svg", svgDiv);
 
     document.getElementById(magic_cell_id.toString()).appendChild(svgDiv)
 
@@ -170,6 +170,6 @@ window.onload = function () {
     Promise.all(
         document.getElementById(magic_cell_id.toString()).getAnimations({ subtree: true })
             .map(animation => animation.finished)
-    ).then(() => window.location.replace("/html/about-this-exercise.html"));
+    ).then(() => window.location.replace("html/about-this-exercise.html"));
 
 }

@@ -36,7 +36,7 @@ function isCurrentPage(pageName) {
 
 function setNextPage(nextPage) {
     const next_page = document.createElement('div');
-    const next_url = "/html/" + nextPage + ".html";
+    const next_url = "../html/" + nextPage + ".html";
     next_page.classList.add("next");
     next_page.addEventListener("click", function () {
         window.location.replace(next_url);
@@ -46,7 +46,7 @@ function setNextPage(nextPage) {
 
 function setLastPage(lastPage) {
     const last_page = document.createElement('div');
-    const last_url = "/html/" + lastPage + ".html";
+    const last_url = "../html/" + lastPage + ".html";
     last_page.classList.add("last");
     last_page.addEventListener("click", function () {
         window.location.replace(last_url);

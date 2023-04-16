@@ -1,4 +1,4 @@
-import { jsondata } from "/js/paths.js";
+import { jsondata } from "../js/paths.js";
 
 const ar_width = 16;
 const ar_height = 9;
@@ -80,7 +80,7 @@ window.onload = function () {
             if (path.label) {
                 if (path.image && path.label.class == "cell-label-bottom") {
                     const imageDiv = document.createElement("div");
-                    fetchSVG("/img/" + path.image).then(imageSVG => {
+                    fetchSVG("../img/" + path.image).then(imageSVG => {
                         imageDiv.appendChild(imageSVG.documentElement);
                         pathDiv.appendChild(imageDiv);
                     });
@@ -100,7 +100,7 @@ window.onload = function () {
 
                 if (path.image && path.label.class == "cell-label-top") {
                     const imageDiv = document.createElement("div");
-                    fetchSVG("/img/" + path.image).then(imageSVG => {
+                    fetchSVG("../img/" + path.image).then(imageSVG => {
                         imageDiv.appendChild(imageSVG.documentElement);
                         pathDiv.appendChild(imageDiv);
                     });
@@ -108,7 +108,7 @@ window.onload = function () {
             } else if (path.image) {
                 const imageDiv = document.createElement("div");
                 imageDiv.id = "svg_" + path.id;
-                fetchSVG("/img/" + path.image).then(imageSVG => {
+                fetchSVG("../img/" + path.image).then(imageSVG => {
                     imageDiv.appendChild(imageSVG.documentElement);
 
 
